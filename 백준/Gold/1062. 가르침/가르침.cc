@@ -15,7 +15,7 @@ int wordcnt(int bit){
 int go(int index, int k, int mask){
 	if(k<0) return 0;
 	if(index == 26) return wordcnt(mask);
-	int ret = go(index+1, k-1, mask|(1<<index));
+	int ret = max(ret,go(index+1, k-1, mask|(1<<index)));
 	if (index != 'a'-'a' && index != 'n'-'a' && index != 't'-'a' && index != 'i'-'a' && index != 'c'-'a'){
 		ret = max(ret,go(index+1,k,mask));
 	}
