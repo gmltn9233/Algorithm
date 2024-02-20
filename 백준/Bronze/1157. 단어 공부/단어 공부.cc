@@ -12,21 +12,16 @@ int main(){
 		ret[s[i]-'A']++;
 	}
 	int cnt=0;
-	int num=0;
 	for(int i=0; i<26; i++){
-		if(cnt<ret[i]){
-			cnt=ret[i];
-			num=i;
-		}
+		cnt= max(cnt,ret[i]);
 	}
-	int ccnt=0;
 	for(int i=0; i<26; i++){
 		if(cnt==ret[i]){
-			++ccnt;
+			v.push_back(i);
 		}
 	}
-	if(ccnt==1){
-		cout<<char('A'+num);
+	if(v.size()==1){
+		cout<<char('A'+v[0]);
 	}
 	else{
 		cout<<"?";
