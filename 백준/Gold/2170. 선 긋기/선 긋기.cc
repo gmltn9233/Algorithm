@@ -2,7 +2,7 @@
 using namespace std;
 typedef pair<int,int> P;
 P v[1000004];
-int n, from,to,ret,l,r;
+int n, from,to,ret;
 int main(){
 	ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -13,18 +13,19 @@ int main(){
 		v[i]=P(from,to);
 	}
 	sort(v,v+n);
-	l = v[0].first;
-	r = v[0].second;
+	from = v[0].first;
+	to = v[0].second;
 	for(int i=1; i<n; i++){
-		if(r < v[i].first){
-			ret += abs(r-l);
-			l = v[i].first;
-			r = v[i].second;
+		if(to < v[i].first){
+			ret += abs(to-from);
+			from = v[i].first;
+			to = v[i].second;
 		}
-		else if(v[i].first<= r && v[i].second >= r){
-			r = v[i].second;
+		else if(v[i].first<= to && v[i].second >= to){
+			to = v[i].second;
 		}
 	}
-	ret += abs(r-l);
+	ret += abs(to-from);
 	cout<<ret<<'\n';
+	return 0;
 }
