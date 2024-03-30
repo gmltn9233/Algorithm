@@ -104,5 +104,8 @@ face에 해당하는 의상이 crow_mask, blue_sunglasses, smoky_makeup이므로
 
 <p>※ 공지 - 2023년 4월 21일 문제 지문이 리뉴얼되었습니다.</p>
 
+<p> 공식 생각해두기: n개의 조합할수있는 모든 경우의 수 </p>
+<p> a,b,c 일 경우 a*b*c + a*b + a*c + b*c + a + b + c = (a+1)(b+1)(c+1)-1 </p>
+<p> n개일 경우 (a+1)(b+1)....(n+1)-1 </p>
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
