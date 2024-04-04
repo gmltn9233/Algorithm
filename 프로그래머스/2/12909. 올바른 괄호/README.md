@@ -68,5 +68,7 @@
 <p>입출력 예 #1,2,3,4<br>
 문제의 예시와 같습니다.</p>
 
-
+<p>     String 접근하려면 string.chatAt(i) 혹은
+        char[] str = s.toCharArray();   변환 후 str[i] 로 접근
+</p>
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
