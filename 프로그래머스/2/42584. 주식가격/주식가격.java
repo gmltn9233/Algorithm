@@ -1,16 +1,18 @@
 import java.util.*;
 class Solution {
-    public List solution(int[] prices) {
-        List<Integer> answer = new ArrayList<>();
+    public int[] solution(int[] prices) {
+        int[] answer = new int[prices.length];
+        Deque<Integer> dq = new ArrayDeque<>();
         for(int i=0; i<prices.length; i++){
-            int num = prices.length-1-i;
-            for(int j=i+1; j<prices.length; j++){
-                if(prices[i]>prices[j]){
-                    num = j-i;
-                    break;
-                }
+            while(!dq.isEmpty()&&prices[dq.getLast()]>prices[i]){
+                answer[dq.getLast()]=i-dq.getLast();
+                dq.removeLast();
             }
-            answer.add(num);
+            dq.add(i);
+        }
+        while(!dq.isEmpty()){
+            answer[dq.getLast()]=prices.length-dq.getLast()-1;
+            dq.removeLast();
         }
         return answer;
     }
