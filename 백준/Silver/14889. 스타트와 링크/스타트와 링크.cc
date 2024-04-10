@@ -22,6 +22,7 @@ int main(){
 		}
 	}
 	for(int i=0; i<(1<<n);i++){
+		// __builtin_popcount() 켜진 갯수 세기
 		if(__builtin_popcount(i)!= n/2 )continue;
 		vector<int> star,link;
 		for(int j=0; j<n; j++){
