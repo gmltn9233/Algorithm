@@ -1,38 +1,34 @@
-#include<bits/stdc++.h>
-using namespace std; 
+#include<bits/stdc++.h> 
+using namespace std;
 int n;
-int a[1001],cnt[1001],ret=1,idx;
-int prev_list[1001];
-vector<int> V;
-void go(int idx){
-	if(idx == -1) return;
-	V.push_back(a[idx]);
-	go(prev_list[idx]);
-	return;
-}
-int main(){
+int lis[1004],len,num;
+pair<int,int> p[1004];
+stack<int> stk;
+int main() {
 	cin>>n;
 	for(int i=0; i<n; i++){
-		cin>>a[i];
+		cin>>num;
+		auto lower_pos = lower_bound(lis,lis+len,num);
+		int pos = (int)(lower_bound(lis,lis+len,num)-lis);
+		if(*lower_pos == 0) len ++;
+		*lower_pos = num;
+		p[i].first = pos;
+		p[i].second = num;
 	}
-	fill(prev_list,prev_list+1001, -1);
-	fill(cnt,cnt+1001,1);
-	for(int i=0; i<n; i++){
-		for(int j=0; j< i; j++){
-			if(a[j]<a[i] && cnt[i]<cnt[j]+1){
-				cnt[i] = cnt[j] + 1;
-				prev_list[i] = j;
-				if(ret<cnt[i]){
-					ret = cnt[i];
-					idx = i;
-				}	
-			}
+	cout<<len<<'\n';
+	for(int i=n-1; i>=0; i--){
+		if(p[i].first == len-1){
+			stk.push(p[i].second);
+			len--;
 		}
 	}
-	cout<<ret<<"\n";
-	go(idx);
-	for(int i = V.size()-1; i>=0; i--){
-		cout<<V[i]<<" ";
+	while(stk.size()){
+		cout<<stk.top()<<" ";
+		stk.pop();
 	}
 	return 0;
 }
+
+
+
+
