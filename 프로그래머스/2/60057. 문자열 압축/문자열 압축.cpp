@@ -1,33 +1,60 @@
-#include <bits/stdc++.h> 
+#include<bits/stdc++.h>
+
 using namespace std;
 
-int solution(string s) {
-    int ret = s.size();
-    for(int cnt = 1; cnt <= s.size()/2; cnt++){  
-        vector<string> v;  
-        bool flag = 0; 
-        int j = 0; 
-        while(true){
-            if(j + cnt >= s.size()){
-                v.push_back(s.substr(j, s.size() - j));
-                break;
-            }
-            v.push_back(s.substr(j, cnt));
-            j = j + cnt;
-        }
-        int _ret = s.size();
-        string temp = v[0];
-        int _count = 1; 
-        for(int i = 1; i < (int)v.size(); i++){
-            if(temp == v[i])_count++;
-            else{
-                if(_count != 1)_ret = _ret - (temp.size() * (_count - 1)) + to_string(_count).size();
-                _count = 1; 
-                temp = v[i];
-            }
-            if(i == v.size() - 1 && _count != 1) _ret = _ret - (temp.size() * (_count - 1)) + to_string(_count).size(); 
-        }  
-        ret = min(ret, _ret);
+//len개 단위로 잘랐을때 압축한 길이 return
+int go(string s, int len){
+    string answer = "";
+    string prev = "";
+    int cnt = 1;
+    for(int i=0; i<len; i++){
+        prev += s[i];
     }
-    return ret;
+    for(int i=len; i<=s.size()-len; i+=len){
+        string now = "";
+        for(int j=i; j<i+len; j++){
+            now += s[j];
+        }
+        //같다면
+        if(!prev.compare(now)){
+            cnt ++;
+        }
+        //다르다면
+        else{
+            if(cnt>1){
+                answer +=to_string(cnt);
+                answer +=prev;
+            }
+            else{
+                answer +=prev;
+            }
+            cnt = 1;
+        }
+        prev = now;
+    }
+    //마지막은 비교를 못하므로 처리
+    if(cnt==1){
+        answer += prev;
+    }
+    else{
+        answer += to_string(cnt);
+        answer +=prev;
+    }
+    if(s.size()%len){
+        for(int i=(s.size()/len)*len; i<s.size(); i++){
+            answer +=s[i];
+        }
+    }
+    //cout<<answer<<"\n";
+    //cout<<answer.size()<<"\n";
+    return answer.size();
 }
+int solution(string s) {
+    int answer = s.size();
+    for(int i=1; i<=s.size()/2; i++){
+        //cout<<"idx: "<<i<<"\n";
+        answer = min(answer,go(s,i));
+    }
+    return answer;
+}
+
