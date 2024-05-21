@@ -19,22 +19,20 @@ int main() {
 		}
 	}
 	dp[1][2][0]=1;
-	for(int i=1; i<=n; i++){
-		for(int j=2; j<=n; j++){
-			if(check(i, j + 1, 0))dp[i][j + 1][0] += dp[i][j][0];
-            if(check(i + 1, j + 1, 1))dp[i + 1][j + 1][1] += dp[i][j][0]; 
-
-            if(check(i + 1, j, 2))dp[i + 1][j][2] += dp[i][j][2];
-            if(check(i + 1, j + 1, 1))dp[i + 1][j + 1][1] += dp[i][j][2]; 
-            
-            if(check(i, j + 1, 0))dp[i][j + 1][0] += dp[i][j][1];
-            if(check(i + 1, j, 2))dp[i + 1][j][2] += dp[i][j][1];
-            if(check(i + 1, j + 1, 1))dp[i + 1][j + 1][1] += dp[i][j][1]; 
+	for(int i=0; i<=n; i++){
+		for(int j=0; j<=n; j++){
+			if(check(i,j+1,0)) dp[i][j+1][0] += dp[i][j][0];
+			if(check(i+1,j+1,1)) dp[i+1][j+1][1] +=dp[i][j][0];
+			
+			if(check(i+1,j,2)) dp[i+1][j][2] +=dp[i][j][2];
+			if(check(i+1,j+1,1)) dp[i+1][j+1][1] +=dp[i][j][2];
+			
+			if(check(i,j+1,0)) dp[i][j+1][0] +=dp[i][j][1];
+			if(check(i+1,j,2)) dp[i+1][j][2] +=dp[i][j][1];
+			if(check(i+1,j+1,1)) dp[i+1][j+1][1] +=dp[i][j][1];
 		}
 	}
-	int ret = dp[n][n][0];
-	ret += dp[n][n][1];
-	ret +=dp[n][n][2];
+	int ret = dp[n][n][0]+dp[n][n][1]+dp[n][n][2];
 	cout<<ret;
 	return 0;
 }
