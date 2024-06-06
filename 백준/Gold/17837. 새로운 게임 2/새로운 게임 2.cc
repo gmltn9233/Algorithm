@@ -49,10 +49,9 @@ void move(int y, int x, int dir, int idx,int turn){
 		horse[idx][1]=nx;
 		horseMap[y][x].pop();
 		// 벡터 순서 뒤집기 
-		reverse(v.begin(),v.end());
-		for(int num : v){
+		for(int i = v.size()-1; i>=0; i--){
 			// horseMap에 삽입 
-			horseMap[ny][nx].push(num);
+			horseMap[ny][nx].push(v[i]);
 		}
 	}
 	
