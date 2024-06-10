@@ -1,38 +1,32 @@
-#include<bits/stdc++.h> 
-using namespace std;
-int n,m,s,e;
-int a[2001];
-int dp[2001][2001];
-int isP(int s, int e){
-	int l=s,r=e;
-	while(l<=r){
-		if(dp[l][r]==1){
-			dp[s][e]=1;
-			return 1;
-		}
-		if(a[l]!=a[r]) return 0;
-		l++;
-		r--;
-	}
-	dp[s][e]=1;
-	return 1;
-}
-int main() {
-	ios_base::sync_with_stdio(false); 
+#include<bits/stdc++.h>
+using namespace std;  
+int n, a[2004], dp[2004][2004], t, from, to; 
+void fastIO(){ 
+    ios_base::sync_with_stdio(false); 
 	cin.tie(NULL); 
 	cout.tie(NULL); 
-	cin>>n;
-	for(int i=0; i<n; i++){
-		cin>>a[i];
-	}
-	cin>>m;
-	for(int i=0; i<m; i++){
-		cin>>s>>e;
-		cout<<isP(s-1,e-1)<<"\n";
-	}
-	return 0;
+	return;
 }
-//14:45
-// 자연수 N개 질문 M번 
-// 질문 : S E (S~E 수가 팰린드롬인가?)
-// 대답: Yes or No
+int main(){
+	fastIO();
+	cin >> n; 
+	for(int i = 1; i <= n; i++){
+		cin >> a[i];
+	}
+	for(int i = 1; i <= n; i++){
+		dp[i][i] = 1; 
+	}
+	for(int i = 1; i <= n; i++){
+		if(a[i] == a[i + 1])dp[i][i + 1] = 1; 
+	}
+	for(int _size = 2; _size <= n; _size++){
+		for(int i = 1; i <= n - _size; i++){
+			if(a[i] == a[i + _size] && dp[i + 1][i + _size - 1])dp[i][i + _size] = 1; 
+		}
+	} 
+	cin >> t; 
+	while(t--){
+		cin >> from >> to; 
+		cout << dp[from][to] << "\n";
+	}  
+}
