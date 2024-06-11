@@ -7,7 +7,7 @@ double go(int idx, int x, int y){
 	if(idx == 18) return (isP[x]||isP[y]) ? 1.0 : 0.0;
 	
 	double &ret = dp[idx][y][x];
-	if(ret>-0.5) return ret;
+	if(ret>-1) return ret;
 	ret = 0.0;
 	ret += go(idx+1,x,y)*(1-a)*(1-b);
 	ret += go(idx+1,x+1,y)*(a)*(1-b);
