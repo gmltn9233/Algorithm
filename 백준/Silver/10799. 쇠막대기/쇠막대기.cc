@@ -27,7 +27,7 @@ int main() {
 		}
 		cnt++;
 	}
-	cout<<ret;
+	cout<<ret<<"\n";
 	return 0;
 }
 
