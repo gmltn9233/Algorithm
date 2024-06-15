@@ -2,7 +2,7 @@
 using namespace std;
 const int INF = 987654321;
 string s;
-int dp[2501][2501],dp2[2501];
+int dp[2504][2504],dp2[2504];
 int go(int idx){
 	if(idx == s.size()) return 0;
 	
