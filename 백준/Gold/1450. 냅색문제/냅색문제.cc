@@ -5,12 +5,16 @@ ll n,c;
 ll a[31],ret;
 vector<int> v,v2;
 void go(int here , int _n, vector<int> &v, int sum){
+	// 가방 최대 무게 초과하는 경우 
 	if(sum>c) return;
+	// 탐색이 종료되면 v에 담고 종료 
 	if(here > _n){
 		v.push_back(sum);
 		return;
 	}
+	// 가방에 넣는 경우 
 	go(here+1, _n, v, sum+a[here]);
+	// 가방에 넣지 않는 경우 
 	go(here+1, _n, v, sum);
 	
 	return;
@@ -27,7 +31,7 @@ int main(){
 	// sorting
 	sort(v.begin(),v.end());
 	sort(v2.begin(),v2.end());
-	
+	// 경우의 수 합치기 
 	for(int b : v){
 		if(c-b >=0) ret += ((int)(upper_bound(v2.begin(),v2.end(),c-b)-v2.begin()));
 	}
