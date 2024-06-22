@@ -1,7 +1,7 @@
 #include <bits/stdc++.h> 
 using namespace std; 
 typedef long long ll; 
-int n, k, dp[101][100001]; 
+int n, k, dp[104][100004]; 
 struct B{
     int _time, pay; 
 }; 
