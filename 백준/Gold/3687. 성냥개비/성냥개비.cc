@@ -2,7 +2,7 @@
 //2. 탑버텀 
 using namespace std;  
 int a[10] = {6, 2, 5, 5, 4, 5, 6, 3, 7, 6},t, n;
-string dp[104], dp2[104], MAX_STR = "11111111111111111111111111111111111111111111111111111";
+string dp[101], dp2[101], MAX_STR = "11111111111111111111111111111111111111111111111111111";
 string get_min_str(string a, string b){
 	if(a.size() == b.size()) return (a < b ? a : b); 
 	if(a.size() < b.size()) return a; 
@@ -35,7 +35,7 @@ int main(){
 	cin >> t;     
 	while(t--){   
 		cin >> n;  
-		fill(dp, dp + 104, MAX_STR);   
+		fill(dp, dp + 101, MAX_STR);   
 		cout << findMin(n) << " " << findMax(n) << "\n";
 	}
 }
