@@ -2,23 +2,27 @@
 using namespace std;
 int a[100001]; 
 int n;
-int init;
 int dp[100001][5][5];
-int check(int from, int to){
-	if(from == 0) return 2;
-	if(from == to) return 1;
-	if(abs(from-to)==2) return 4;
-	return 3;
-}
 int go(int idx,int left, int right){
-	if(idx >= n) return 0;
+	if(idx == n) return 0;
 	
 	int &ret = dp[idx][left][right];
 	if(ret!=-1) return ret;
 	ret = 987654321;
 	
-	ret = min(ret, go(idx+1,a[idx],right)+check(left,a[idx]));
-	ret = min(ret, go(idx+1,left,a[idx])+check(right,a[idx]));
+	int num = a[idx];
+	//Left
+	if(left == 0) ret = min(ret,go(idx+1,num,right)+2); 
+        else if(num == left) ret = min(ret,go(idx+1,num,right)+1); 
+        else if(abs(left-num)==2) ret = min(ret, go(idx+1,num,right)+4); 
+        else ret = min(ret,go(idx+1,num,right)+3);
+	
+        //Right
+	if(right == 0) ret = min(ret,go(idx+1,left,num)+2);
+	else if(num == right) ret = min(ret,go(idx+1,left,num)+1);
+	else if(abs(right-num)==2) ret = min(ret,go(idx+1,left,num)+4);
+	else ret = min(ret,go(idx+1,left,num)+3);
+	
 	return ret;
 }
 int main(){
@@ -26,15 +30,8 @@ int main(){
 		int num = 0;
 		cin>>num;
 		if(num==0) break;
-		a[n]=num;
-		++n;
+		a[n++] = num; 
 	}
 	memset(dp,-1,sizeof(dp));
 	cout<<go(0,0,0)<<"\n";
 }
-// 중점 0, 위 1, 왼 2, 아래 3, 오른쪽 4
-// 두 발이 같은 지점에 있을 수 없음(처음 제외)
-// 중앙 -> 다른 지점 2
-// 지점 -> 인접 지점 3
-// 지점 -> 반대 지점 4
-// 사용되는 최소 힘? 
