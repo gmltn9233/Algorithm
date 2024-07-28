@@ -18,8 +18,8 @@ void update(vector<long long> &tree, int i, long long diff) {
 }
 int main() { 
     scanf("%d %d %d",&n,&m,&k);
-    vector<long long> a(n+1);
-    vector<long long> tree(n+1);
+    vector<long long> a(n+2);
+    vector<long long> tree(n+2);
     for (int i=1; i<=n; i++) {
         scanf("%lld",&a[i]);
         update(tree, i, a[i]);
