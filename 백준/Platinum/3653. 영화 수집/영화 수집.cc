@@ -1,7 +1,7 @@
 #include<bits/stdc++.h> 
 using namespace std;
 int t, n, m, tree[200004], temp; 
-map<int, int> mp; 
+map<int, int> mp;
 void update(int idx, int value){
     while(idx <= 200004){ 
         tree[idx] += value;  
@@ -9,12 +9,12 @@ void update(int idx, int value){
     }
 }
 int sum(int idx){
-    int ret = 0; 
-    while(idx > 0){
-        ret += tree[idx];
-        idx -= (idx & -idx);
-    }
-    return ret; 
+	int ret = 0;
+	while(idx>0){
+		ret += tree[idx];
+		idx -= (idx & -idx);
+	}
+	return ret;
 }
 int main(){
 	ios_base::sync_with_stdio(false); 
