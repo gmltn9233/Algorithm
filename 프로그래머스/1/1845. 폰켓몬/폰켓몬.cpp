@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
-map<int,int> mp;
+map<int,int> mpp;
 int solution(vector<int> nums)
 {
     for(int num : nums){
-        mp[num] += 1;
+        mpp[num] += 1;
     }
     
-    return mp.size() < nums.size()/2 ? mp.size() : nums.size()/2;
+    return mpp.size() < nums.size()/2 ? mpp.size() : nums.size()/2;
 }
