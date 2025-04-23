@@ -1,19 +1,18 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+
 using namespace std;
-int n,a;
-int main(){
-	cin>>n;
-	for(int i=0; i<n; i++){
-		cin>>a;
-		int q=0,d=0,c=0,p=0;
-		q=a/25;
-		a-=q*25;
-		d=a/10;
-		a-=d*10;
-		c=a/5;
-		a-=c*5;
-		p=a;
-		cout<<q<<" "<<d<<" "<<c<<" "<<p<<'\n';
-	}
-	return 0;
+int t;
+int main()
+{
+    cin>>t;
+    while(t--){
+        int c;
+        cin>>c;
+        int q = c/25;
+        int d = (c-(25*q))/10;
+        int n = (c-(25*q)-(10*d))/5;
+        int p = (c-(25*q)-(10*d)-(5*n));
+        cout<<q<<" "<<d<<" "<<n<<" "<<p<<"\n";
+    }
+    return 0;
 }
