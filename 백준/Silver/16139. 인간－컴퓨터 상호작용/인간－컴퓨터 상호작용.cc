@@ -8,43 +8,28 @@ Write your code in this editor and press "Run" button to compile and execute it.
 
 #include <bits/stdc++.h>
 using namespace std;
-vector<pair<int,int>>ch[26];
 string s;
-char a;
-int q,l,r;
+int ret[26][200001];
 map<char,int> mp;
-void find(char a, int l, int r){
-    int leftNum = 0;
-    int rightNum = 0;
-    vector<pair<int,int>> v = ch[a-'a'];
-    for(auto at : v){
-        // cout<<at.first<<","<<l<<"\n";
-        if(at.first >= l){
-            break;
-        }
-        leftNum = at.second;
-    }
-    //cout << "left: " << leftNum << "\n";
-    for(int i=ch[a-'a'].size()-1; i>=0; i--){
-        if(ch[a-'a'][i].first <= r){
-            rightNum = ch[a-'a'][i].second;
-            break;
-        }
-    }
-    //cout<<"right: "<<rightNum<<"\n";
-    cout<<rightNum - leftNum<<"\n";
-}
+int q,l,r;
+char c;
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
     cin>>s;
     for(int i=0; i<s.size(); i++){
         mp[s[i]]++;
-        ch[s[i]-'a'].push_back({i,mp[s[i]]});
+        for(int j=0; j<26; j++){
+            ret[j][i]=mp['a'+j];
+        }
     }
     cin>>q;
     while(q--){
-        cin>>a>>l>>r;
-        find(a,l,r);
+        cin>>c>>l>>r;
+        if(l==0) cout<< ret[c-'a'][r]<<"\n";
+        else cout<<ret[c-'a'][r]-ret[c-'a'][l-1]<<"\n";
     }
+
     return 0;
 }
