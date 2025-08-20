@@ -1,40 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
-int n,k,m,v,cnt;
-long long c,ret;
-vector<pair<int,int>> jewels;
-multiset<long long> bags;
+using ll = long long;
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    
-    cin>>n>>k;
-    for(int i=0; i<n; i++){
-        cin>>m>>v;
-        jewels.push_back({v,m});
+
+    int n, k; 
+    cin >> n >> k;
+
+    vector<pair<ll,ll>> gem; gem.reserve(n);      // {weight, value}
+    for (int i = 0; i < n; ++i) {
+        ll m, v; cin >> m >> v;
+        gem.emplace_back(m, v);
     }
-    
-    sort(jewels.begin(), jewels.end());
-    reverse(jewels.begin(), jewels.end());
-    
-    for(int i=0; i<k; i++){
-        cin>>c;
-        bags.insert(c);
+    sort(gem.begin(), gem.end());                 // weight asc
+
+    vector<ll> bag; bag.reserve(k);
+    for (int i = 0; i < k; ++i) {
+        ll c; cin >> c; bag.push_back(c);
     }
-    
-    
-    
-    for(int i=0; i<jewels.size(); i++){
-        if(cnt>k) break;
-        auto it = bags.lower_bound(jewels[i].second);
-        if(it != bags.end()){
-            bags.erase(it);
-            ++cnt;
-            ret += jewels[i].first;
+    sort(bag.begin(), bag.end());                 // capacity asc
+
+    priority_queue<ll> pq;                        // values max-heap
+    ll ret = 0;
+    int j = 0;
+    for (int i = 0; i < k; ++i) {
+        while (j < n && gem[j].first <= bag[i])   // fit this bag
+            pq.push(gem[j++].second);
+        if (!pq.empty()) {
+            ret += pq.top();
+            pq.pop();
         }
     }
-    
-    cout<<ret;
-    // 가격순 정렬해서 무게와 가장 근접한거로 담기
+    cout << ret << '\n';
     return 0;
 }
