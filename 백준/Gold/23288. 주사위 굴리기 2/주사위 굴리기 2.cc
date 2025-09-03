@@ -71,13 +71,9 @@ void rollDice(int d){
 
 void go(int y, int x, int k){
     if(k==0) return;
-
-    //cout<<"d: "<<d<<"\n";
     
     int ny = y+dy[d];
     int nx = x+dx[d];
-    
-    //cout<<"ny: "<<ny<<" nx: "<<nx<<"\n";
 
     // 1. 칸 없다면 반대 방향
     if(ny<0 || ny>=n || nx<0 || nx>=m){
@@ -107,17 +103,15 @@ void go(int y, int x, int k){
             if(ny<0 || ny>=n || nx<0 || nx>=m) continue;
             if(visited[ny][nx]) continue;
             if(mp[ny][nx]==mp[y][x]){
-                //cout<<"y: "<<ny<<" x:"<<nx<<"\n";
                 ++cnt;
                 visited[ny][nx] = 1;
                 q.push({ny,nx});
             }
         }
     }
-    //cout<<"count: "<<cnt<<"\n";
+    
     int score = mp[ny][nx]*cnt;
     
-    //cout<<"down: "<<dice.down<<", num:"<<mp[ny][nx]<<"\n";
     // 3. 이동방향 결정
     if(dice.down > mp[ny][nx]){
         d = (d+1)%4;
@@ -125,7 +119,7 @@ void go(int y, int x, int k){
     if(dice.down < mp[ny][nx]){
         d = (d+3)%4;
     }
-    //cout<<"d:"<<d<<"\n";
+    
     ret += score;
     
     go(ny,nx,k-1);
