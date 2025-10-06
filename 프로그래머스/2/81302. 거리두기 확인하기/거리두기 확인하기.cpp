@@ -1,57 +1,56 @@
-#include <string>
-#include <vector>
-#include <queue>
+#include <bits/stdc++.h>
+
 using namespace std;
-
-int dy[4] = {-1,0,1,0};
-int dx[4] = {0,1,0,-1};
-
-bool BFS(int Y, int X, vector<string> place){
-    int visited[5][5]={0};
-    queue<pair<int,int>> q;
-    visited[Y][X]=1;
-    q.push(make_pair(Y,X));
-    
-    while(!q.empty()){
-        int y= q.front().first;
-        int x= q.front().second;
-        q.pop();
-        if(visited[y][x]>=3){
-            break;
-        }
-        for(int i=0; i<4; i++){
-            int ny = y+dy[i];
-            int nx = x+dx[i];
-            if(ny<0||ny>=5||nx<0||nx>=5||visited[ny][nx]!=0||place[ny][nx]=='X') continue;
-            if(place[ny][nx]=='P'){
-               return false;
-            }
-            visited[ny][nx]= visited[y][x]+1;
-            q.push(make_pair(ny,nx));
-        }
-    }
-    return true;
-}
-
-
-int isOk(vector<string> place){
-    
+int visited[6][6];
+int dy[4]={-1,0,1,0};
+int dx[4]={0,1,0,-1};
+vector<int> solution(vector<vector<string>> places) {
+    vector<int> answer;
+    for(int k=0; k<places.size(); k++){
+        //cout<<k+1<<"\n";
+        bool flag = false;
     for(int i=0; i<5; i++){
+        if(flag) break;
         for(int j=0; j<5; j++){
-            if(place[i][j]=='P'){
-                if(!BFS(i,j,place)){
-                    return 0;
+            if(flag) break;
+            if(places[k][i][j]=='P'){
+                //cout<<i<<","<<j<<"탐색 시작\n";
+                queue<pair<int,int>> q;
+                fill(&visited[0][0], &visited[0][0]+6*6, 0);
+                visited[i][j]=1;
+                q.push({i,j});
+                while(q.size() && !flag){
+                    int y = q.front().first;
+                    int x = q.front().second;
+                    if(visited[y][x] >=3) break;
+                    q.pop();
+                    for(int dir=0; dir<4; dir++){
+                        int ny = y+dy[dir];
+                        int nx = x+dx[dir];
+                        
+                        if(ny<0 || ny>=5|| nx<0 ||nx>=5) continue;
+                        if(places[k][ny][nx]=='X') continue;
+                        if(visited[ny][nx]) continue;
+                        if(places[k][ny][nx]=='P'){
+                            flag = true;
+                            continue;
+                        }
+                        //cout<<ny<<","<<nx<<"\n";
+                        visited[ny][nx] = visited[y][x]+1;
+                        q.push({ny,nx});
+                    }
                 }
             }
         }
     }
-    return 1;
-}
-
-vector<int> solution(vector<vector<string>> places) {
-    vector<int> answer;
-    for(int i=0 ; i<5; i++){
-        answer.push_back(isOk(places[i]));
+        if(flag){
+            answer.push_back(0);
+            //cout<<"실패\n";
+        } 
+        else{
+            answer.push_back(1);
+            //cout<<"성공\n";
+        } 
     }
     return answer;
 }
