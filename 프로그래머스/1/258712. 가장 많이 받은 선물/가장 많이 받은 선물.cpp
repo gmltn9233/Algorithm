@@ -1,59 +1,60 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-int a[51][51];
-map<string, int> mp;
-int score[51];
-int gift[51];
-
+int gift_score[52];
+map<string,int> mp;
+int gift_list[52][52];
+int gift[52];
+vector<string> get_name(string s){
+    vector<string> names;
+    int idx = 0;
+    for(int i=0; i<s.length(); i++){
+        if(s[i]==' ') idx = i;
+    }
+    names.push_back(s.substr(0,idx));
+    names.push_back(s.substr(idx+1));
+    return names;
+}
 int solution(vector<string> friends, vector<string> gifts) {
     int answer = 0;
-    for (int i = 0; i < friends.size(); i++) {
-        mp[friends[i]] = i;
+    int n = friends.size();
+    
+    for(int i=0; i<friends.size(); i++){
+        mp[friends[i]]=i+1;
     }
-    for (string s : gifts) {
-        string s1, s2;
-        for (int i = 0; i < s.size(); i++) {
-            if (s[i] == ' ') {
-                s1 = s.substr(0, i);
-                s2 = s.substr(i + 1); // 공백 이후부터 끝까지 추출
-                break;
+    for(auto it : gifts){
+        vector<string> s = get_name(it);
+        string from = s[0];
+        string to = s[1];
+        
+        gift_score[mp[from]]++;
+        gift_score[mp[to]]--;
+        gift_list[mp[from]][mp[to]]++;
+    }
+    
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+            if((gift_list[i][j]==0 && gift_list[j][i]==0) || gift_list[i][j]==gift_list[j][i]){
+                if(gift_score[i] < gift_score[j]) gift[j]++;
+                if(gift_score[i] > gift_score[j]) gift[i]++;
+            }
+            else{
+                gift_list[i][j]<gift_list[j][i] ? gift[j]++ : gift[i]++;
             }
         }
-        a[mp[s1]][mp[s2]]++;
-        score[mp[s1]]++;
-        score[mp[s2]]--;
-    }
-
-    for (int i = 0; i < friends.size(); i++) {
-        for (int j = i + 1; j < friends.size(); j++) {
-            if (a[i][j] == 0 && a[j][i] == 0) {
-                // 주고받은 기록이 없는 경우
-                if (score[i] > score[j]) {
-                    gift[i]++;
-                } else if (score[i] < score[j]) {
-                    gift[j]++;
-                }
-            } else if (a[i][j] == a[j][i]) {
-                // 주고받은 횟수가 같은 경우
-                if (score[i] > score[j]) {
-                    gift[i]++;
-                } else if (score[i] < score[j]) {
-                    gift[j]++;
-                }
-            } else {
-                // 주고받은 횟수가 다른 경우
-                if (a[i][j] > a[j][i]) {
-                    gift[i]++;
-                } else {
-                    gift[j]++;
-                }
-            }
+        // for(auto it : friends){
+        //     for(auto itt : friends){
+        //         int from = mp[it];
+        //         int to = mp[itt];
+        //         cout<<it<<":"<<gift_list[from][to]<<","<<itt<<":"<<gift_list[to][from]<<"\n";
+        //     }
+        // }
+        for(int i=1; i<=n; i++){
+            answer = max(answer,gift[i]/2);
         }
     }
-
-    for (int i = 0; i < friends.size(); i++) {
-        answer = max(answer, gift[i]);
-    }
+    
+    
+    
     return answer;
 }
